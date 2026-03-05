@@ -17,7 +17,7 @@
     "lint": "biome lint .",
     "format": "biome format --write .",
     "check": "biome check .",
-    "verify": "node scripts/verify.js"
+    "verify": "node --env-file=.env scripts/verify.js"
   },
   "dependencies": {
     "@hono/mcp": "^0.2.4",
