@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "MCP server for sending notifications from AI agents via Discord Webhook",
   "type": "module",
+  "bin": {
+    "notifier-mcp": "src/index.js"
+  },
   "engines": {
     "node": ">=24"
   },
