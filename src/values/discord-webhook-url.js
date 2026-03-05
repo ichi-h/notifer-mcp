@@ -24,7 +24,7 @@ export class DiscordWebhookUrl {
       throw new Error("DISCORD_WEBHOOK_URL contains invalid characters.");
     }
 
-    const trimmed = rawUrl?.trim();
+    const trimmed = rawUrl.trim();
 
     if (!trimmed) {
       throw new Error(

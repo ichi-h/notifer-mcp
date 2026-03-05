@@ -1,3 +1,4 @@
+import { DiscordWebhookUrl } from "../values/index.js";
 import { NotificationService } from "./notification-service.js";
 
 /**
@@ -14,6 +15,11 @@ export class DiscordNotificationService extends NotificationService {
    */
   constructor(discordWebhookUrl) {
     super();
+    if (!(discordWebhookUrl instanceof DiscordWebhookUrl)) {
+      throw new TypeError(
+        "discordWebhookUrl must be an instance of DiscordWebhookUrl",
+      );
+    }
     this.#webhookUrl = discordWebhookUrl.value;
   }
 
