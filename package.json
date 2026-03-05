@@ -15,7 +15,12 @@
     "format": "biome format --write .",
     "check": "biome check ."
   },
-  "dependencies": {},
+  "dependencies": {
+    "@hono/mcp": "^0.2.4",
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "hono": "^4.12.5",
+    "zod": "^4.3.6"
+  },
   "devDependencies": {
     "@biomejs/biome": "^2.4.5"
   }

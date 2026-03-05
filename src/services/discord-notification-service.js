@@ -72,7 +72,10 @@ export class DiscordNotificationService extends NotificationService {
       if (error.name === "AbortError") {
         throw new Error("Discord Webhook request timed out after 10 seconds");
       }
-      throw error;
+      if (error instanceof Error) {
+        throw error; // HTTP エラーなど既にErrorインスタンスのものはそのまま再スロー
+      }
+      throw new Error("Discord Webhook request failed due to a network error");
     } finally {
       clearTimeout(timeoutId);
     }
