@@ -2,13 +2,15 @@
  * Environment variable loading and validation
  */
 
+import { DiscordWebhookUrl } from "./values/index.js";
+
 const SUPPORTED_DESTINATIONS = ["discord"];
 
 /**
  * Loads environment variables, validates them, and returns a config object.
  * Throws an Error if validation fails.
  *
- * @returns {{ sendTo: string, discordWebhookUrl?: string }}
+ * @returns {{ sendTo: string, discordWebhookUrl?: import("./values/discord-webhook-url.js").DiscordWebhookUrl }}
  */
 function loadConfig() {
   const sendTo = process.env.SEND_TO;
@@ -26,27 +28,8 @@ function loadConfig() {
 
   // Destination-specific validation
   if (sendTo === "discord") {
-    const rawDiscordWebhookUrl = process.env.DISCORD_WEBHOOK_URL;
-
-    if (/[\r\n]/.test(rawDiscordWebhookUrl)) {
-      throw new Error("DISCORD_WEBHOOK_URL contains invalid characters.");
-    }
-
-    const discordWebhookUrl = rawDiscordWebhookUrl?.trim();
-
-    if (!discordWebhookUrl) {
-      throw new Error(
-        'DISCORD_WEBHOOK_URL is required when SEND_TO is "discord".',
-      );
-    }
-
-    const DISCORD_WEBHOOK_URL_PATTERN =
-      /^https:\/\/(discord\.com|discordapp\.com)\/api\/webhooks\/\d+\/.+$/;
-    if (!DISCORD_WEBHOOK_URL_PATTERN.test(discordWebhookUrl)) {
-      throw new Error(
-        "DISCORD_WEBHOOK_URL must be a valid Discord webhook URL (https://discord.com/api/webhooks/... or https://discordapp.com/api/webhooks/...).",
-      );
-    }
+    const rawUrl = process.env.DISCORD_WEBHOOK_URL;
+    const discordWebhookUrl = new DiscordWebhookUrl(rawUrl);
 
     return {
       sendTo,
