@@ -16,7 +16,8 @@
     "test": "node --test 'src/**/*.test.js'",
     "lint": "biome lint .",
     "format": "biome format --write .",
-    "check": "biome check ."
+    "check": "biome check .",
+    "verify": "node scripts/verify.js"
   },
   "dependencies": {
     "@hono/mcp": "^0.2.4",

@@ -34,9 +34,13 @@ function registerNotifySend(server) {
       try {
         config = loadConfig();
       } catch (error) {
+        console.error(
+          "[notify/send] Failed to load configuration:",
+          error instanceof Error ? error.message : String(error),
+        );
         throw new McpError(
           ErrorCode.InternalError,
-          `Failed to load configuration: ${error instanceof Error ? error.message : String(error)}`,
+          "Failed to load configuration. Check server environment variables.",
         );
       }
 
@@ -67,9 +71,13 @@ function registerNotifySend(server) {
         if (error instanceof McpError) {
           throw error;
         }
+        console.error(
+          "[notify/send] Failed to send notification:",
+          error instanceof Error ? error.message : String(error),
+        );
         throw new McpError(
           ErrorCode.InternalError,
-          `Failed to send notification: ${error instanceof Error ? error.message : String(error)}`,
+          "Failed to send notification. Check server logs for details.",
         );
       }
     },

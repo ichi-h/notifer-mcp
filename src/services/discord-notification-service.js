@@ -1,6 +1,13 @@
 import { DiscordWebhookUrl } from "../values/index.js";
 import { NotificationService } from "./notification-service.js";
 
+class DiscordWebhookError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "DiscordWebhookError";
+  }
+}
+
 /**
  * Discord Webhook notification service
  *
@@ -64,7 +71,7 @@ export class DiscordNotificationService extends NotificationService {
       });
 
       if (!response.ok) {
-        throw new Error(
+        throw new DiscordWebhookError(
           `Discord Webhook request failed: HTTP ${response.status}`,
         );
       }
@@ -72,8 +79,8 @@ export class DiscordNotificationService extends NotificationService {
       if (error.name === "AbortError") {
         throw new Error("Discord Webhook request timed out after 10 seconds");
       }
-      if (error instanceof Error) {
-        throw error; // HTTP エラーなど既にErrorインスタンスのものはそのまま再スロー
+      if (error instanceof DiscordWebhookError) {
+        throw error;
       }
       throw new Error("Discord Webhook request failed due to a network error");
     } finally {

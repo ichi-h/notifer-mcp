@@ -52,6 +52,16 @@ export class DiscordWebhookUrl {
    * @returns {string}
    */
   toString() {
-    return this.#value;
+    return this.#value.replace(
+      /(\/api\/webhooks\/\d+\/)[\w-]+$/,
+      "$1[REDACTED]",
+    );
+  }
+
+  /**
+   * @returns {string}
+   */
+  toJSON() {
+    return "[DiscordWebhookUrl REDACTED]";
   }
 }
