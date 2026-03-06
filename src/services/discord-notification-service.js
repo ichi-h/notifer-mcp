@@ -49,6 +49,7 @@ export class DiscordNotificationService extends NotificationService {
   async send(payload) {
     const body = payload.title
       ? {
+          content: "@everyone",
           embeds: [
             {
               title: payload.title,
@@ -56,7 +57,7 @@ export class DiscordNotificationService extends NotificationService {
             },
           ],
         }
-      : { content: payload.message };
+      : { content: `@everyone\n${payload.message}` };
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10_000);
