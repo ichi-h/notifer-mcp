@@ -1,18 +1,18 @@
+---
+name: testing
+description: テストや静的解析などの検証を行うスキル。この検証を求められたときに使用する。
+---
+
 # Testing Skill
-
-## 概要
-
-testerエージェントの実行スコープを定義します。
 
 ## 実行すること
 
 1. **linter / formatter の実行**
-   - `pnpm check`（biome check: フォーマット + lint）
-   - `pnpm lint`（biome lint）
-
+  - `pnpm check`（biome check: フォーマット + lint）
+  - `pnpm lint`（biome lint）
 2. **既存テストコードの実行**
-   - `pnpm test` が定義されていれば実行する
-   - テストファイル（`*.test.js`, `*.spec.js` 等）が存在すれば実行する
+  - `pnpm test` が定義されていれば実行する
+  - テストファイル（`*.test.js`, `*.spec.js` 等）が存在すれば実行する
 
 ## 実行しないこと
 
