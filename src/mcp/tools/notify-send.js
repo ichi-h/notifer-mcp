@@ -1,5 +1,5 @@
 /**
- * notify/send MCP tool
+ * notify_send MCP tool
  *
  * Sends a notification to the configured destination.
  */
@@ -10,13 +10,13 @@ import { loadConfig } from "../../config.js";
 import { DiscordNotificationService } from "../../services/index.js";
 
 /**
- * Registers the `notify/send` tool on the given MCP server.
+ * Registers the `notify_send` tool on the given MCP server.
  *
  * @param {import("@modelcontextprotocol/sdk/server/mcp.js").McpServer} server
  */
 function registerNotifySend(server) {
   server.registerTool(
-    "notify/send",
+    "notify_send",
     {
       description:
         "Send a notification to the configured destination (e.g. Discord)",
@@ -35,7 +35,7 @@ function registerNotifySend(server) {
         config = loadConfig();
       } catch (error) {
         console.error(
-          "[notify/send] Failed to load configuration:",
+          "[notify_send] Failed to load configuration:",
           error instanceof Error ? error.message : String(error),
         );
         throw new McpError(
@@ -72,7 +72,7 @@ function registerNotifySend(server) {
           throw error;
         }
         console.error(
-          "[notify/send] Failed to send notification:",
+          "[notify_send] Failed to send notification:",
           error instanceof Error ? error.message : String(error),
         );
         throw new McpError(

@@ -4,12 +4,12 @@ An MCP (Model Context Protocol) server that sends notifications from AI agents v
 
 ## Overview
 
-`notifier-mcp` exposes a single MCP tool — `notify/send` — that allows AI agents (e.g. Claude, Cursor, GitHub Copilot) to push messages to a Discord channel through a Webhook URL.
+`notifier-mcp` exposes a single MCP tool — `notify_send` — that allows AI agents (e.g. Claude, Cursor, GitHub Copilot) to push messages to a Discord channel through a Webhook URL.
 
 ## Prerequisites
 
 | Requirement | Version |
-|-------------|---------|
+| ----------- | ------- |
 | Node.js     | >= 24   |
 | pnpm        | any     |
 
@@ -30,10 +30,10 @@ An MCP (Model Context Protocol) server that sends notifications from AI agents v
 
 ## Environment Variables
 
-| Variable              | Required                        | Description                                                    |
-|-----------------------|---------------------------------|----------------------------------------------------------------|
-| `SEND_TO`             | ✅ Always                       | Notification destination. Currently only `discord` is supported. |
-| `DISCORD_WEBHOOK_URL` | ✅ When `SEND_TO=discord`       | The Discord Webhook URL to post messages to.                   |
+| Variable              | Required                  | Description                                                      |
+| --------------------- | ------------------------- | ---------------------------------------------------------------- |
+| `SEND_TO`             | ✅ Always                 | Notification destination. Currently only `discord` is supported. |
+| `DISCORD_WEBHOOK_URL` | ✅ When `SEND_TO=discord` | The Discord Webhook URL to post messages to.                     |
 
 ### Example `.env`
 
@@ -106,28 +106,28 @@ Edit `.vscode/mcp.json` in your project root:
 
 ## Available MCP Tools
 
-### `notify/send`
+### `notify_send`
 
 Sends a notification message to the configured destination.
 
 | Parameter | Type   | Required | Constraints    | Description                   |
-|-----------|--------|----------|----------------|-------------------------------|
-| `message` | string | ✅        | max 4096 chars | The notification message body |
-| `title`   | string | ❌        | max 256 chars  | Optional notification title   |
+| --------- | ------ | -------- | -------------- | ----------------------------- |
+| `message` | string | ✅       | max 4096 chars | The notification message body |
+| `title`   | string | ❌       | max 256 chars  | Optional notification title   |
 
 **Example invocation (natural language prompt):**
 
 > "Send a notification that the deployment has finished."
 
-The agent will call `notify/send` with an appropriate `message` (and optionally `title`) based on context.
+The agent will call `notify_send` with an appropriate `message` (and optionally `title`) based on context.
 
 ## Development Commands
 
-| Command            | Description                              |
-|--------------------|------------------------------------------|
-| `pnpm start`       | Run the MCP server                       |
-| `pnpm dev`         | Run the MCP server with `--watch` mode   |
-| `pnpm test`        | Run tests (`node --test`)                |
-| `pnpm lint`        | Lint source files with Biome             |
-| `pnpm format`      | Format source files with Biome           |
-| `pnpm check`       | Run both lint and format checks (Biome)  |
+| Command       | Description                             |
+| ------------- | --------------------------------------- |
+| `pnpm start`  | Run the MCP server                      |
+| `pnpm dev`    | Run the MCP server with `--watch` mode  |
+| `pnpm test`   | Run tests (`node --test`)               |
+| `pnpm lint`   | Lint source files with Biome            |
+| `pnpm format` | Format source files with Biome          |
+| `pnpm check`  | Run both lint and format checks (Biome) |
