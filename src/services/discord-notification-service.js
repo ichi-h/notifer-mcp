@@ -19,19 +19,27 @@ class DiscordWebhookError extends Error {
 export class DiscordNotificationService extends NotificationService {
   /**
    * @param {import("../values/discord-webhook-url.js").DiscordWebhookUrl} discordWebhookUrl - Discord Webhook URL value object
+   * @param {typeof globalThis.fetch} [fetch] - fetch implementation (defaults to globalThis.fetch)
    */
-  constructor(discordWebhookUrl) {
+  constructor(discordWebhookUrl, fetch = globalThis.fetch) {
     super();
     if (!(discordWebhookUrl instanceof DiscordWebhookUrl)) {
       throw new TypeError(
         "discordWebhookUrl must be an instance of DiscordWebhookUrl",
       );
     }
+    if (typeof fetch !== "function") {
+      throw new TypeError("fetch must be a callable function");
+    }
     this.#webhookUrl = discordWebhookUrl.value;
+    this.#fetch = fetch;
   }
 
   /** @type {string} */
   #webhookUrl;
+
+  /** @type {typeof globalThis.fetch} */
+  #fetch;
 
   /**
    * @returns {string}
@@ -49,21 +57,21 @@ export class DiscordNotificationService extends NotificationService {
   async send(payload) {
     const body = payload.title
       ? {
-          content: "@everyone",
-          embeds: [
-            {
-              title: payload.title,
-              description: payload.message,
-            },
-          ],
-        }
+        content: "@everyone",
+        embeds: [
+          {
+            title: payload.title,
+            description: payload.message,
+          },
+        ],
+      }
       : { content: `@everyone\n${payload.message}` };
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10_000);
 
     try {
-      const response = await fetch(this.#webhookUrl, {
+      const response = await this.#fetch(this.#webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
